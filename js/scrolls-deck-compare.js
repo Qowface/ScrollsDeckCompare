@@ -1,30 +1,6 @@
 function compareDecks() {
-    deck1 = JSON.parse($('#deckOne').val());
-    deck2 = JSON.parse($('#deckTwo').val());
-
-    types1 = deck1.types;
-    types2 = deck2.types;
-    var object1 = {};
-    var object2 = {};
-
-    for (i in types1) {
-        item = object1[types1[i]];
-        if (!item) {
-            item = 1;
-        } else {
-            item += 1;
-        }
-        object1[types1[i]] = item;
-    }
-    for (i in types2) {
-        item = object2[types2[i]];
-        if (!item) {
-            item = 1;
-        } else {
-            item += 1;
-        }
-        object2[types2[i]] = item;
-    }
+    var object1 = parseDeckString($('#deckOne').val());
+    var object2 = parseDeckString($('#deckTwo').val());
 
     console.clear();
     console.log('=== INPUTS ===');
@@ -34,6 +10,24 @@ function compareDecks() {
     var result = diff(object1, object2);
 
     processOutput(result);
+}
+
+function parseDeckString(deckString) {
+    deck = JSON.parse(deckString);
+    types = deck.types;
+    var output = {};
+    
+    for (i in types) {
+        item = output[types[i]];
+        if (!item) {
+            item = 1;
+        } else {
+            item += 1;
+        }
+        output[types[i]] = item;
+    }
+    
+    return output;
 }
 
 function diff(obj1, obj2) {
